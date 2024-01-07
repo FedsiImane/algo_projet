@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8C75EFB12B4AF3AB0080A61B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 8C75EFB02B4AF3AB0080A61B /* main.c */; };
+		8C75EFB92B4AF4CC0080A61B /* libraylib.4.5.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C75EFB82B4AF4CC0080A61B /* libraylib.4.5.0.dylib */; };
+		8C75EFBA2B4AF4D70080A61B /* libraylib.4.5.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 8C75EFB82B4AF4CC0080A61B /* libraylib.4.5.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,11 +22,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		8C75EFBB2B4AF4D70080A61B /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8C75EFBA2B4AF4D70080A61B /* libraylib.4.5.0.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8C75EFAD2B4AF3AB0080A61B /* algo_projet */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = algo_projet; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C75EFB02B4AF3AB0080A61B /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		8C75EFB72B4AF4BA0080A61B /* raylib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raylib.h; path = "../../Downloads/raylib-master/src/raylib.h"; sourceTree = "<group>"; };
+		8C75EFB82B4AF4CC0080A61B /* libraylib.4.5.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libraylib.4.5.0.dylib; path = ../../../../opt/homebrew/Cellar/raylib/5.0/lib/libraylib.4.5.0.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C75EFB92B4AF4CC0080A61B /* libraylib.4.5.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +57,8 @@
 		8C75EFA42B4AF3AB0080A61B = {
 			isa = PBXGroup;
 			children = (
+				8C75EFB82B4AF4CC0080A61B /* libraylib.4.5.0.dylib */,
+				8C75EFB72B4AF4BA0080A61B /* raylib.h */,
 				8C75EFAF2B4AF3AB0080A61B /* algo_projet */,
 				8C75EFAE2B4AF3AB0080A61B /* Products */,
 			);
@@ -72,6 +90,7 @@
 				8C75EFA92B4AF3AB0080A61B /* Sources */,
 				8C75EFAA2B4AF3AB0080A61B /* Frameworks */,
 				8C75EFAB2B4AF3AB0080A61B /* CopyFiles */,
+				8C75EFBB2B4AF4D70080A61B /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -245,6 +264,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/raylib/5.0/include/;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/raylib/5.0/lib/,
+					/opt/homebrew/Cellar/raylib/5.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -253,6 +277,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = /opt/homebrew/Cellar/raylib/5.0/include/;
+				LIBRARY_SEARCH_PATHS = (
+					/opt/homebrew/Cellar/raylib/5.0/lib/,
+					/opt/homebrew/Cellar/raylib/5.0/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

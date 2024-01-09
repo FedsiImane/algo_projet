@@ -60,11 +60,28 @@ void selectionSortAscending(Node** head) {
         minNode->data = temp;
     }
 }
+void selectionSortDescending(Node** head) {
+    Node *i, *j, *maxNode;
+    int frameCount = 0;
 
+    for (i = *head; i != NULL; i = i->next) {
+        maxNode = i;
+
+        for (j = i->next; j != NULL; j = j->next) {
+            if (j->data > maxNode->data) {
+                maxNode = j;
+            }
+        }
+
+        int temp = i->data;
+        i->data = maxNode->data;
+        maxNode->data = temp;
+    }
+}
         
 int main(void){
     Node* myList = NULL;
-    int i , val , n;
+    int i , val , n , choice ;
     
     printf (" entrer n :");
     scanf ("%d",&n);
@@ -76,8 +93,18 @@ int main(void){
     printf("Original List: ");
     printList(myList);
     
-    selectionSortAscending(&myList);
-    
+    printf (" entrer choice entre 1 et 2 :");
+    scanf ("%d",&choice);
+    if (choice == 1){
+        selectionSortAscending(&myList);
+       
+    }else if (choice == 2){
+        selectionSortDescending(&myList);
+        
+    }else{
+        printf(" there is no choice like this ");
+    }
     freeList(myList);
     return 0;
+    
 }

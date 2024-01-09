@@ -25,6 +25,7 @@ void createNode(Node** head, int data) {
                 }
     }
 }
+
 void printList(Node* head) {
     Node* current = head;
     while (current != NULL) {
@@ -33,6 +34,7 @@ void printList(Node* head) {
     }
     printf("NULL\n");
 }
+
 void freeList(Node* head) {
     Node* current = head;
     Node* next = NULL;
@@ -97,6 +99,7 @@ void selectionSortAscending(Node** head) {
         for (int delay = 0; delay < 1000000000; delay++);
     }
 }
+
 void selectionSortDescending(Node** head) {
     Node *i, *j, *maxNode;
     int frameCount = 0;

@@ -78,6 +78,32 @@ void selectionSortDescending(Node** head) {
         maxNode->data = temp;
     }
 }
+void drawListWithAnimation(Node* head, Node* node1, Node* node2, const char* swapDetails, int frameCount) {
+    const int spacing = 60;
+    int posX = 50;
+    Node* current = head;
+
+    while (current != NULL) {
+        DrawRectangle(posX, 300, 50, 50, BLUE);
+        DrawText(TextFormat("%d", current->data), posX + 10, 310, 20, WHITE);
+
+        if (current->next != NULL) {
+            DrawLine(posX + 50, 325, posX + spacing, 325, DARKGRAY);
+            DrawTriangle((Vector2){posX + spacing, 325}, (Vector2){posX + spacing - 10, 320}, (Vector2){posX + spacing - 10, 330}, DARKGRAY);
+        }
+
+        if (current == node1 || current == node2) {
+            DrawRectangle(posX, 300, 50, 50, RED);
+            DrawText(swapDetails, 10, 400, 20, BLACK);
+        }
+
+        posX += spacing;
+        current = current->next;
+    }
+
+    DrawText(TextFormat("Frame: %d", frameCount), 10, 430, 20, BLACK);
+}
+
         
 int main(void){
     Node* myList = NULL;

@@ -128,6 +128,11 @@ void selectionSortDescending(Node** head) {
 
         
 int main(void){
+    const int screenWidth = 800;
+    const int screenHeight = 600;
+
+    InitWindow(screenWidth, screenHeight, "Raylib Selection Sort Animation");
+
     Node* myList = NULL;
     int i , val , n , choice ;
     
@@ -141,17 +146,31 @@ int main(void){
     printf("Original List: ");
     printList(myList);
     
-    printf (" entrer choice entre 1 et 2 :");
-    scanf ("%d",&choice);
-    if (choice == 1){
-        selectionSortAscending(&myList);
-        printList(myList);
-    }else if (choice == 2){
-        selectionSortDescending(&myList);
-        printList(myList);
-    }else{
-        printf(" there is no choice like this ");
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        
+        drawListWithAnimation(myList, NULL, NULL, "", 0);
+        
+        DrawRectangle(10, 500, 170, 50, GREEN);
+        DrawText("Sort Ascending", 20, 510, 20, BLACK);
+        DrawRectangle(200, 500, 180, 50, RED);
+        DrawText("Sort Descending", 210, 510, 20, BLACK);
+
+        Vector2 mousePos = GetMousePosition();
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            if (CheckCollisionPointRec(mousePos, (Rectangle){10, 500, 150, 50})) {
+                selectionSortAscending(&myList);
+            } else if (CheckCollisionPointRec(mousePos, (Rectangle){200, 500, 150, 50})) {
+                selectionSortDescending(&myList);
+                
+            }
+        }
+        
+        EndDrawing();
     }
+
+    CloseWindow();
     freeList(myList);
     return 0;
     

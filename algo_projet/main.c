@@ -60,7 +60,7 @@ void drawListWithAnimation(Node* head, Node* node1, Node* node2, const char* swa
         }
 
         if (current == node1 || current == node2) {
-            DrawRectangle(posX, 300, 50, 50, RED);
+            DrawRectangle(posX, 300, 50, 50, GRAY);
             DrawText(swapDetails, 10, 400, 20, BLACK);
         }
 
@@ -155,9 +155,9 @@ int main(void){
         
         drawListWithAnimation(myList, NULL, NULL, "", 0);
         
-        DrawRectangle(10, 500, 170, 50, GREEN);
+        DrawRectangle(10, 500, 170, 50, PINK);
         DrawText("Sort Ascending", 20, 510, 20, BLACK);
-        DrawRectangle(200, 500, 180, 50, RED);
+        DrawRectangle(200, 500, 180, 50, PINK);
         DrawText("Sort Descending", 210, 510, 20, BLACK);
 
         Vector2 mousePos = GetMousePosition();

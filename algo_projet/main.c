@@ -33,7 +33,35 @@ void printList(Node* head) {
     }
     printf("NULL\n");
 }
+void freeList(Node* head) {
+    Node* current = head;
+    Node* next = NULL;
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+}
+void selectionSortAscending(Node** head) {
+    Node *i, *j, *minNode;
+    int frameCount = 0;
 
+    for (i = *head; i != NULL; i = i->next) {
+        minNode = i;
+
+        for (j = i->next; j != NULL; j = j->next) {
+            if (j->data < minNode->data) {
+                minNode = j;
+            }
+        }
+
+        int temp = i->data;
+        i->data = minNode->data;
+        minNode->data = temp;
+    }
+}
+
+        
 int main(void){
     Node* myList = NULL;
     int i , val , n;
@@ -47,5 +75,9 @@ int main(void){
     }
     printf("Original List: ");
     printList(myList);
+    
+    selectionSortAscending(&myList);
+    
+    freeList(myList);
     return 0;
 }

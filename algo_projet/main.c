@@ -13,12 +13,28 @@ void createNode(Node** head, int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode != NULL) {
         newNode->data = data;
-        newNode->next = *head;
-        *head = newNode;
+        newNode->next = NULL;
+        if (*head == NULL) {
+                    *head = newNode;
+                } else {
+                    Node* current = *head;
+                    while (current->next != NULL) {
+                        current = current->next;
+                    }
+                    current->next = newNode;
+                }
     }
 }
+void printList(Node* head) {
+    Node* current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
 
-int main(){
+int main(void){
     Node* myList = NULL;
     int i , val , n;
     
@@ -29,5 +45,7 @@ int main(){
         scanf ("%d",&val);
         createNode(&myList, val);
     }
-   
+    printf("Original List: ");
+    printList(myList);
+    return 0;
 }

@@ -97,10 +97,10 @@ int main(void){
     scanf ("%d",&choice);
     if (choice == 1){
         selectionSortAscending(&myList);
-       
+        printList(myList);
     }else if (choice == 2){
         selectionSortDescending(&myList);
-        
+        printList(myList);
     }else{
         printf(" there is no choice like this ");
     }

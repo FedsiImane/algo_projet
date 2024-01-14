@@ -1,5 +1,5 @@
 
-#include "raylib.h"
+
 #include <stdio.h>
 #include <stdlib.h>
  
@@ -249,6 +249,48 @@ int main(void){
                 
             }
         }
+if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
+    
+    int valueToInsert;
+    printf("Enter value to insert: ");
+    scanf("%d", &valueToInsert);
+    myList = insertAtPosition(myList, position, valueToInsert);
+}
+
+
+while (!WindowShouldClose()) {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    
+
+   
+    DrawRectangle(10, 550, 100, 40, GREEN);
+    DrawText("Insert", 30, 560, 20, BLACK);
+
+   
+    DrawRectangle(120, 550, 100, 40, RED);
+    DrawText("Delete", 140, 560, 20, WHITE);
+
+   
+    DrawRectangle(230, 550, 100, 40, BLUE);
+    DrawText("Search", 250, 560, 20, WHITE);
+
+    EndDrawing();
+
+    
+    Vector2 mousePos = GetMousePosition();
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
+            
+            } else if (CheckCollisionPointRec(mousePos, (Rectangle){120, 550, 100, 40})) {
+         
+            } else if (CheckCollisionPointRec(mousePos, (Rectangle){230, 550, 100, 40})) {
+            
+        }
+    }
+}
+
         
         EndDrawing();
     }
@@ -256,5 +298,3 @@ int main(void){
     CloseWindow();
     freeList(myList);
     return 0;
-    
-}

@@ -299,3 +299,4 @@ while (!WindowShouldClose()) {
     CloseWindow();
     freeList(myList);
     return 0;
+}

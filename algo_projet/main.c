@@ -2,7 +2,7 @@
 #include"raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
- 
+#include <math.h>
 typedef struct Node {
     int data;
     struct Node* next;
@@ -43,6 +43,55 @@ void freeList(Node* head) {
         current = next;
     }
 }
+void drawList(Node* head, const char* label, int posX, int posY) {
+    const int spacing = 60;
+    Node* current = head;
+
+    DrawText(label, posX, posY - 30, 20, BLACK);
+
+    while (current != NULL) {
+        DrawRectangle(posX, posY, 50, 50, BLUE);
+        DrawText(TextFormat("%d", current->data), posX + 10, posY + 10, 20, WHITE);
+
+        if (current->next != NULL) {
+            DrawLine(posX + 50, posY + 25, posX + spacing, posY + 25, DARKGRAY);
+            DrawTriangle((Vector2){posX + spacing, posY + 25}, (Vector2){posX + spacing - 10, posY + 20}, (Vector2){posX + spacing - 10, posY + 30}, DARKGRAY);
+        }
+
+        posX += spacing;
+        current = current->next;
+    }
+}
+void drawInputArea(char* buffer, int bufferIndex) {
+    DrawRectangle(10, 10, 200, 50, LIGHTGRAY);
+    DrawText("Enter Value:", 20, 20, 20, BLACK);
+    DrawRectangle(220, 10, 100, 30, WHITE);
+    DrawText(buffer, 230, 20, 20, BLACK);
+}
+int textToInt(const char* text) {
+    int result;
+    sscanf(text, "%d", &result);
+    return result;
+}
+void handleInput(char* buffer, int* bufferIndex) {
+    int key = GetKeyPressed();
+
+    if (key != 0) {
+       
+        if ((key >= KEY_ZERO && key <= KEY_NINE) || key == KEY_BACKSPACE) {
+            if ((*bufferIndex) < 15) {
+                
+                if (key == KEY_BACKSPACE && (*bufferIndex) > 0) {
+                    buffer[--(*bufferIndex)] = '\0';
+                } else {
+                    
+                    buffer[(*bufferIndex)++] = (char)key;
+                    buffer[(*bufferIndex)] = '\0';
+                }
+            }
+        }
+    }
+}
 
 void drawListWithAnimation(Node* head, Node* node1, Node* node2, const char* swapDetails, int frameCount) {
     const int spacing = 60;
@@ -59,7 +108,8 @@ void drawListWithAnimation(Node* head, Node* node1, Node* node2, const char* swa
         }
 
         if (current == node1 || current == node2) {
-            DrawRectangle(posX, 300, 50, 50, GRAY);
+         float yOffset = 1 * sin(frameCount * 0.2f);
+            DrawRectangle(posX, 300+yOffset, 50, 50, Fade (GRAY,0.8));
             DrawText(swapDetails, 10, 400, 20, BLACK);
         }
 
@@ -82,11 +132,11 @@ void selectionSortAscending(Node** head) {
                 minNode = j;
             }
         }
-
+if (i != minNode){
         int temp = i->data;
         i->data = minNode->data;
         minNode->data = temp;
-        
+        }
         char swapDetails[50];
         sprintf(swapDetails, "Swapped %d with %d", i->data, minNode->data);
 
@@ -110,11 +160,11 @@ void selectionSortDescending(Node** head) {
                 maxNode = j;
             }
         }
-
+if (i != maxNode) {
         int temp = i->data;
         i->data = maxNode->data;
         maxNode->data = temp;
-        
+         }
         char swapDetails[50];
         sprintf(swapDetails, "Swapped %d with %d", i->data, maxNode->data);
 
@@ -206,9 +256,6 @@ Node* deleteElement(Node* head, int targetValue) {
     return head;
 }
 
-void closeAndClean() {
-    CloseWindow();
-}
 
 int main(void){
     const int screenWidth = 800;
@@ -217,82 +264,42 @@ int main(void){
     InitWindow(screenWidth, screenHeight, "Raylib Selection Sort Animation");
 
     Node* myList = NULL;
-    int i , val , n , choice ;
-    
-    printf (" entrer n :");
-    scanf ("%d",&n);
-    for (i=0 ; i< n ; i++){
-        printf (" entrer val :");
-        scanf ("%d",&val);
-        createNode(&myList, val);
-    }
-    printf("Original List: ");
-    printList(myList);
-    
+    char buffer[16] = "";
+    int bufferIndex = 0;
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
-        drawListWithAnimation(myList, NULL, NULL, "", 0);
-        
-        DrawRectangle(10, 500, 170, 50, PINK);
-        DrawText("Sort Ascending", 20, 510, 20, BLACK);
-        DrawRectangle(200, 500, 180, 50, PINK);
-        DrawText("Sort Descending", 210, 510, 20, BLACK);
+        handleInput(buffer, &bufferIndex);
 
-        Vector2 mousePos = GetMousePosition();
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            if (CheckCollisionPointRec(mousePos, (Rectangle){10, 500, 150, 50})) {
-                selectionSortAscending(&myList);
-            } else if (CheckCollisionPointRec(mousePos, (Rectangle){200, 500, 150, 50})) {
-                selectionSortDescending(&myList);
-                
+        drawInputArea(buffer, bufferIndex);
+        if (bufferIndex > 0) {
+            DrawRectangle(10, 70, 170, 50, PINK);
+            DrawText("Add to List", 20, 80, 20, BLACK);
+            if (CheckCollisionPointRec(GetMousePosition(), (Rectangle){10, 70, 150, 50}) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                int val = textToInt(buffer);
+                createNode(&myList, val);
+                buffer[0] = '\0';
+                bufferIndex = 0;
             }
         }
-if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
+     if (myList != NULL) {
+            DrawRectangle(200, 70, 170, 50, PINK);
+            DrawText("Sort Ascending", 210, 80, 20, BLACK);
+            if (CheckCollisionPointRec(GetMousePosition(), (Rectangle){200, 70, 150, 50}) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                selectionSortAscending(&myList);
+            }
 
+            DrawRectangle(380, 70, 170, 50, PINK);
+            DrawText("Sort Descending", 390, 80, 20, BLACK);
+            if (CheckCollisionPointRec(GetMousePosition(), (Rectangle){380, 70, 150, 50}) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                selectionSortDescending(&myList);
+            }
 
-    int valueToInsert;
-    printf("Enter value to insert: ");
-    scanf("%d", &valueToInsert);
-    myList = insertAtPosition(myList, position, valueToInsert);
-}
-
-
-while (!WindowShouldClose()) {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-
-    
-
-   
-    DrawRectangle(10, 550, 100, 40, GREEN);
-    DrawText("Insert", 30, 560, 20, BLACK);
-
-   
-    DrawRectangle(120, 550, 100, 40, RED);
-    DrawText("Delete", 140, 560, 20, WHITE);
-
-   
-    DrawRectangle(230, 550, 100, 40, BLUE);
-    DrawText("Search", 250, 560, 20, WHITE);
-
-    EndDrawing();
-
-    
-    Vector2 mousePos = GetMousePosition();
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
-            
-            } else if (CheckCollisionPointRec(mousePos, (Rectangle){120, 550, 100, 40})) {
-         
-            } else if (CheckCollisionPointRec(mousePos, (Rectangle){230, 550, 100, 40})) {
-            
+            drawList(myList, "Current List:", 200, 150);
         }
-    }
-}
-
-        
+         
+   
         EndDrawing();
     }
 

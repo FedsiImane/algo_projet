@@ -250,11 +250,6 @@ int main(void){
             }
         }
 if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
-    
-    int position;
-    printf("Enter position to insert: ");
-    scanf("%d", &position);
-    myList = insertAtPosition(myList, position, valueToInsert);
 
 
     int valueToInsert;

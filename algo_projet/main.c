@@ -1,5 +1,4 @@
 
-
 #include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,7 +98,6 @@ void selectionSortAscending(Node** head) {
         for (int delay = 0; delay < 1000000000; delay++);
     }
 }
-
 void selectionSortDescending(Node** head) {
     Node *i, *j, *maxNode;
     int frameCount = 0;
@@ -129,7 +127,44 @@ void selectionSortDescending(Node** head) {
     }
 }
 
+Node* insertAtPosition(Node* head, int position, int valueToInsert) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) {
         
+        TraceLog(LOG_ERROR, "Erreur d'allocation de mémoire");
+        return head;
+    }
+
+    newNode->data = valueToInsert;
+
+    if (position == 0) {
+        
+        newNode->next = head;
+        return newNode;
+    }
+
+    Node* current = head;
+    int currentPosition = 0;
+
+while (current != NULL && currentPosition < position - 1) {
+        current = current->next;
+        currentPosition++;
+    }
+
+    if (current == NULL) {
+        
+        free(newNode);
+        return head;
+    }
+
+    
+    newNode->next = current->next;
+    current->next = newNode;
+
+    return head;
+}
+
+    
 int main(void){
     const int screenWidth = 800;
     const int screenHeight = 600;

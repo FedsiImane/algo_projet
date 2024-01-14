@@ -164,7 +164,42 @@ while (current != NULL && currentPosition < position - 1) {
     return head;
 }
 
+
+while (current != NULL && currentPosition < position - 1) {
+        current = current->next;
+        currentPosition++;
+    }
+
+    if (current == NULL) {
+        
+        free(newNode);
+        return head;
+    }
+
     
+    newNode->next = current->next;
+    current->next = newNode;
+
+    return head;
+}
+
+
+Node* searchValue(Node* head, int targetValue) {
+    Node* current = head;
+
+    while (current != NULL) {
+        if (current->data == targetValue) {
+            
+            return current;
+        }
+        current = current->next;
+    }
+
+
+    return NULL;
+}
+
+ 
 int main(void){
     const int screenWidth = 800;
     const int screenHeight = 600;

@@ -199,7 +199,37 @@ Node* searchValue(Node* head, int targetValue) {
     return NULL;
 }
 
- 
+Node* deleteElement(Node* head, int targetValue) {
+    Node* current = head;
+    Node* prev = NULL;
+
+    while (current != NULL) {
+        if (current->data == targetValue) {
+            
+            if (prev == NULL) {
+                
+                head = current->next;
+            } else {
+               
+                prev->next = current->next;
+            }
+
+           
+            free(current);
+            return head;
+        }
+
+        prev = current;
+        current = current->next;
+    }
+
+    return head;
+}
+
+void closeAndClean() {
+    CloseWindow();
+}
+
 int main(void){
     const int screenWidth = 800;
     const int screenHeight = 600;

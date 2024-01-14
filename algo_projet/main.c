@@ -164,26 +164,6 @@ while (current != NULL && currentPosition < position - 1) {
     return head;
 }
 
-
-while (current != NULL && currentPosition < position - 1) {
-        current = current->next;
-        currentPosition++;
-    }
-
-    if (current == NULL) {
-        
-        free(newNode);
-        return head;
-    }
-
-    
-    newNode->next = current->next;
-    current->next = newNode;
-
-    return head;
-}
-
-
 Node* searchValue(Node* head, int targetValue) {
     Node* current = head;
 

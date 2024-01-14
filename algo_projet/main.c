@@ -298,7 +298,44 @@ int main(void){
 
             drawList(myList, "Current List:", 200, 150);
         }
-         
+         DrawRectangle(10, 550, 100, 40, GREEN);
+        DrawText("Insert", 30, 560, 20, BLACK);
+
+        DrawRectangle(120, 550, 100, 40, RED);
+        DrawText("Delete", 140, 560, 20, WHITE);
+
+        DrawRectangle(230, 550, 100, 40, BLUE);
+        DrawText("Search", 250, 560, 20, WHITE);
+
+        
+        Vector2 mousePos = GetMousePosition();
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            if (CheckCollisionPointRec(mousePos, (Rectangle){10, 550, 100, 40})) {
+                int position;
+                printf("Enter position to insert: ");
+                scanf("%d", &position);
+
+                int valueToInsert;
+                printf("Enter value to insert: ");
+                scanf("%d", &valueToInsert);
+                myList = insertAtPosition(myList, position, valueToInsert);
+            } else if (CheckCollisionPointRec(mousePos, (Rectangle){120, 550, 100, 40})) {
+                int targetValue;
+                printf("Enter value to delete: ");
+                scanf("%d", &targetValue);
+                myList = deleteElement(myList, targetValue);
+            } else if (CheckCollisionPointRec(mousePos, (Rectangle){230, 550, 100, 40})) {
+                int targetValue;
+                printf("Enter value to search: ");
+                scanf("%d", &targetValue);
+                Node* result = searchValue(myList, targetValue);
+                if (result != NULL) {
+                    printf("Value %d found in the list.\n", targetValue);
+                } else {
+                    printf("Value %d not found in the list.\n", targetValue);
+                }
+            }
+        }
    
         EndDrawing();
     }
